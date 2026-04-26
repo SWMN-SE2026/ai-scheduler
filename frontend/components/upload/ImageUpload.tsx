@@ -5,7 +5,7 @@ import { scheduleAPI, api } from '@/lib/api';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-export default function ImageUpload() {
+export default function ImageUpload({ onExtractionComplete }: { onExtractionComplete?: (data: any) => void }) {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [savedFiles, setSavedFiles] = useState<any[]>([]);
@@ -20,16 +20,22 @@ export default function ImageUpload() {
     setPreview(URL.createObjectURL(file));
   };
 
-  const handleSave = async () => {
+const handleSave = async () => {
     if (!image) return;
     setIsSaving(true);
     try {
-      await scheduleAPI.uploadImage(image);
+      const response = await scheduleAPI.uploadImage(image);
       setImage(null);
       setPreview(null);
       if (fileInputRef.current) fileInputRef.current.value = '';
       await handleViewFiles();
       setShowFiles(true);
+      
+      // ADD THIS LINE: Pass the model_output up to the Dashboard!
+      if (onExtractionComplete && response.model_output) {
+         onExtractionComplete(response.model_output);
+      }
+      
     } catch (err) {
       console.error('Save failed:', err);
     } finally {
