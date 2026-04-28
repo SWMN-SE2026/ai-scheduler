@@ -4,6 +4,8 @@
 > **Goal:** Eliminate medical equipment "shadow systems" by digitizing handwritten sign-out logs using local Vision AI.
 
 ## 📖 Overview
+Rufus Baysah, Backend Developer, Ai-Focused Programming.
+
 This project is an intelligent logistics assistant that helps hospitals and medical facilities track high-value mobile equipment (such as C-arm X-rays and ventilators). Instead of forcing staff to manually type data into a complex system, this app allows users to simply snap a photo of their physical sign-out sheets. The image is parsed by a local multimodal LLM (Ollama) into structured data, instantly updating a real-time hospital equipment dashboard.
 
 
